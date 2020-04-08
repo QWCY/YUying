@@ -14,7 +14,7 @@
         ul {
             width: 500%;
             height: 500px;
-            transition: 1s;
+            transition: all 1s;
             transform: translateX(0);
 
         }
@@ -49,20 +49,56 @@
         </ul>
     </div>
     <script>
-        function aa() {
-            var width = 0
-            setInterval(function () {
-                width = width - 20
-                if (width == -100) {
-                    width = 0
-                    $('ul').css('transition', '0')
-                    $("ul").css('transform', '' + width + '%')
+        (function () {
+
+            let width = 0;
+            let inter;
+
+            document.addEventListener('visibilitychange', () => {
+                if (!document.hidden) {
+                    init()
+                } else {
+                    clearInterval(inter)
                 }
-                $('ul').css('transition', '1')
-                $("ul").css('transform', 'translateX(' + width + '%)')
-            }, 1000)
-        };
-        aa()
+            });
+
+            $("ul").on("mouseover", () => {
+                console.log("进来了")
+                clearInterval(inter)
+            })
+
+            $("ul").on("mouseout", () => {
+                console.log("出去了")
+                init()
+            })
+
+            function init() {
+                inter = setInterval(() => {
+                    width -= 20
+                    if (width == -100) {
+                        width = 0
+                        $('ul').css('transitionDuration', '0s')
+                        $("ul").css('transform', 'translateX(' + width + '%)')
+                        width -= 20
+                        setTimeout(() => {
+                            $('ul').css('transitionDuration', '1s')
+                            $("ul").css('transform', 'translateX(' + width + '%)')
+                        }, 60)
+                    } else {
+                        $("ul").css('transform', 'translateX(' + width + '%)')
+                    }
+
+                }, 1000)
+            };
+
+            init();
+
+
+        })()
+
+
+
+
     </script>
 </body>
 
