@@ -1,62 +1,105 @@
 <html lang="enu">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <style>
-        *{
-            padding:0;
-            margin:0;
+        * {
+            padding: 0;
+            margin: 0;
         }
-        ul{
-          width:500%;
-          height:500px;
-          transition:1s;
-          transform: translateX(0);
-          
+
+        ul {
+            width: 500%;
+            height: 500px;
+            transition: all 1s;
+            transform: translateX(0);
+
         }
-        ul li{
-          width:20%; 
-          list-style: none;
-          float:left;  
-          height:500px; 
-          
-      }
-      .yu{
-          overflow: hidden;
-      }
-img{
-   width:100%;
-   height:500px;
-}
+
+        ul li {
+            width: 20%;
+            list-style: none;
+            float: left;
+            height: 500px;
+
+        }
+
+        .yu {
+            overflow: hidden;
+        }
+
+        img {
+            width: 100%;
+            height: 500px;
+        }
     </style>
 </head>
+
 <body>
-   <div class="yu">
-       <ul>
-           <li><img src="img/1.jpg"/></li>
-           <li><img src="img/2.jpg"/></li>
-           <li><img src="img/3.jpg"/></li>
-           <li><img src="img/4.jpg"/></li>
-           <li><img src="img/1.jpg"/></li>
-       </ul>
-   </div>
-  <script>
-      function aa(){
-           var width=0
-           setInterval(function(){
-              width=width-20
-               if(width==-100){
-                   width=0
-                $('ul').css('transition','0')     
-                $("ul").css('transform',''+width+'%')
-               }
-               $('ul').css('transition','1')
-            $("ul").css('transform','translateX('+width+'%)')    
-           },1000)
-        };
-    aa()
+    <div class="yu">
+        <ul>
+            <li><img src="img/1.jpg" /></li>
+            <li><img src="img/2.jpg" /></li>
+            <li><img src="img/3.jpg" /></li>
+            <li><img src="img/4.jpg" /></li>
+            <li><img src="img/1.jpg" /></li>
+        </ul>
+    </div>
+    <script>
+        (function () {
+
+            let width = 0;
+            let inter;
+
+            document.addEventListener('visibilitychange', () => {
+                if (!document.hidden) {
+                    init()
+                } else {
+                    clearInterval(inter)
+                }
+            });
+
+            $("ul").on("mouseover", () => {
+                console.log("进来了")
+                clearInterval(inter)
+            })
+
+            $("ul").on("mouseout", () => {
+                console.log("出去了")
+                init()
+            })
+
+            function init() {
+                inter = setInterval(() => {
+                    width -= 20
+                    if (width == -100) {
+                        width = 0
+                        $('ul').css('transitionDuration', '0s')
+                        $("ul").css('transform', 'translateX(' + width + '%)')
+                        width -= 20
+                        setTimeout(() => {
+                            $('ul').css('transitionDuration', '1s')
+                            $("ul").css('transform', 'translateX(' + width + '%)')
+                        }, 60)
+                    } else {
+                        $("ul").css('transform', 'translateX(' + width + '%)')
+                    }
+
+                }, 1000)
+            };
+
+            init();
+
+
+        })()
+
+
+
+
     </script>
 </body>
+
 </html>
